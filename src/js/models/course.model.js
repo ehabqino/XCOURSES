@@ -1,4 +1,5 @@
-const { oj } = require("@oracle/oraclejet/dist/types");
+
+
 
 define([], 
     function() {
@@ -7,6 +8,8 @@ define([],
                 this.serverUrl = "http://localhost:2480/";
 
             }
+            
+            //to connect to api or database
             initializeModelCollection(endpoint){
                 this.courseModelDef = oj.Model.extend({
                     url : endpoint,
@@ -18,15 +21,19 @@ define([],
                     model : new this.courseModelDef
 
                 });
-                this.courses = new this.courseModelDef;
+                this.courses = new this.courseCollDef;
+                
 
             }
+
+            //
             getCoursesMenu(notify){
+                
                 let api_url = this.serverUrl + "query/ehabcourses/sql/SELECT FROM course";
                 this.initializeModelCollection(api_url);
                 let courseRow = new this.courseModelDef({},this.courses);
                 courseRow.fetch({
-                    success : (coll,data){
+                    success : (coll,data)=>{
                         console.log("Success");
                         console.log(data);
 
@@ -34,6 +41,13 @@ define([],
                     error : (model,xhr,options)=>{
                         console.log("Error");
                         console.log(options);
+                    },
+                    Headers : {
+                        'Authorization': 'Basic cm9vdDpyb290cHdk',
+                        'Content-Type':'application/json'
+
+                        //if i want to manual encrypt user name and password
+                        //'Authorization' : 'Basec'+btoa('root:rootpwd') 
                     }
                 });//end fetch
                 
@@ -44,16 +58,23 @@ define([],
                 notify(navData);
 
             }
-
+             
+            //
             getCoursesList(notify){
 
             }
+
+            //
             addCourses(id,title,description,notify){
 
             }
+
+            //
             updateCourse(id,title,description,notify){
 
             }
+
+            //
             deleteCourse(id,notify){
 
             }
