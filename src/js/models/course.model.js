@@ -47,7 +47,7 @@ define([],
                         'Content-Type':'application/json'
 
                         //if i want to manual encrypt user name and password
-                        //'Authorization' : 'Basec'+btoa('root:rootpwd') 
+                        //'Authorization' : 'Basic'+btoa('root:rootpwd') 
                     }
                 });//end fetch
                 
